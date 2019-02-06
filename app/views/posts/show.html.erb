@@ -1,0 +1,16 @@
+<section class="banner-section" style="background-image:url('https://picsum.photos/2000/500/?image=<%= @post['id'] %>'); background-size:cover; height: 380px; left: 0; position: absolute; background-position:0;">
+</section>
+<section class="post-content-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 post-title-block">
+        <h1 class="text-center"><%= @post['title'] %></h1>
+      </div>
+      <div class="col-lg-9 col-md-9 col-sm-12">
+        <p class="lead"><%= @post['body'] %></p>
+        <a href="#" class="badge badge-dark">Author: <%= @post['author'] %></a>
+        <a href="#" class="badge badge-info">Published: <%= @post['published-at'] %></a>
+      </div>
+    </div>
+  </div>
+</section>
