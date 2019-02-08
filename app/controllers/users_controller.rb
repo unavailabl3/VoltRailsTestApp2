@@ -1,3 +1,5 @@
+require 'aws-sdk'
+
 class UsersController < ApplicationController
   include ApplicationHelper
 
@@ -11,6 +13,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    file_path = params[:avatar][:file].path
+    if (File.size(file_path).to_f / 1024000 < 3) && (['.jpg','.png'].include?(File.extname(file_path)))
+      avatar_url = save_image_to_s3(image_location: file_path, folder_name: 'uploads')
+      update_user(photo_url: avatar_url)
+    else
+      flash[:upload_error] = "Upload error. File must be less than 3Mb and must have jpg/png extension."
+    end
+    redirect_to users_path
   end
 
   def login
@@ -31,21 +41,18 @@ class UsersController < ApplicationController
 
   private
 
-  def save_screenshot_to_s3(image_location, folder_name,user_id)
-    service = AWS::S3.new(:access_key_id => 'AKIAJQ43XLA5AUMWDVCA',
-                          :secret_access_key => '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')
-    bucket_name = "unavailabl3"
-    if(service.buckets.include?(bucket_name))
-      bucket = service.buckets[bucket_name]
-    else
-      bucket = service.buckets.create(bucket_name)
-    end
-    bucket.acl = :public_read
-    key = folder_name.to_s + "/" + File.basename(image_location)
-    s3_file = service.buckets[bucket_name].objects[key].write(:file => image_location)
-    s3_file.acl = :public_read
-    user = User.where(id: user_id).first
-    user.image = s3_file.public_url.to_s
-    user.save
+  def update_user(photo_url: nil)
+    get_request(url: "#{api_url}/api/v1/users/#{@user_email}/edit?photo_url=#{photo_url}", token: @token)
+  end
+
+  def save_image_to_s3(image_location: '', folder_name: '', user_id: nil)
+    # KEY_ID and SECRET_KEY setted through ENV
+    s3 = Aws::S3::Resource.new(region: 'us-east-2')
+    bucket = 'unavailabl3'
+    name = File.basename(image_location)
+    obj = s3.bucket(bucket).object(name)
+    obj.upload_file(image_location)
+    obj.acl.put({ acl: "public-read" })
+    obj.public_url.to_s
   end
 end

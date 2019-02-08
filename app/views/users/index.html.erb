@@ -1,5 +1,10 @@
+<% flash.each do |key, message| %>
+  <div class="alert alert-danger" role="alert">
+    <%= message %>
+  </div>
+<% end %>
 <div class="card account">
-  <img src="<%= (@user['photo_url'].nil?)?  'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg' : @user['photo_url'] %>" style="width:100%">
+  <img src="<%= (@user['photo_url'].nil?)?  'https://s3.us-east-2.amazonaws.com/unavailabl3/nobody.jpg' : @user['photo_url'] %>" style="width:100%">
   <br>
   <h3><b><%= @user['nickname'] %></b></h3>
   <button type="button" class="btn btn-warning"><%= @user['email'] %></button>
@@ -9,15 +14,18 @@
 <div class="photo_file container">
 <div class="col-md-12">
     <div class="form-group">
+      <%= form_for :avatar, :html => {:multipart => true}, url: "/users/edit" do |f|%>
         <div class="input-group">
             <span class="input-group-btn">
                 <span class="btn btn-info btn-file">
-                    Browse… <input type="file" id="imgInp">
+                    Browse… <%= f.file_field :file , id: "imgInp"%>
                 </span>
             </span>
             <input type="text" class="form-control" readonly value="Upload Image">
+            <%= f.submit  "Upload", class:"btn btn-info send_but"%>
         </div>
         <img id='img-upload'/>
+        <% end %>
     </div>
 </div>
 </div>

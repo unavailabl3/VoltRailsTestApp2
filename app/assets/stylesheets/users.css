@@ -68,3 +68,7 @@
   width: 50%;
   margin: 0 auto;
 }
+
+.photo_file .send_but{
+  display: none;
+}

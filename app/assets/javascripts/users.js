@@ -19,6 +19,7 @@ $(document).ready( function() {
 		});
 		function readURL(input) {
 		    if (input.files && input.files[0]) {
+            $('.photo_file .send_but').css('display','block');
 		        var reader = new FileReader();
 
 		        reader.onload = function (e) {
