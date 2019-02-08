@@ -20,7 +20,7 @@ module ApplicationHelper
     parameters =  {email: email, password: password}.to_json
     header = { 'CONTENT_TYPE' => 'application/json' }
     http = Net::HTTP.new(url.host, url.port)
-    #http.use_ssl = true
+    http.use_ssl = true
     request = Net::HTTP::Post.new(url.request_uri, header)
     request.body = parameters
 
