@@ -1,2 +1,23 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<div class="card account">
+  <img src="<%= (@user['photo_url'].nil?)?  'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg' : @user['photo_url'] %>" style="width:100%">
+  <br>
+  <h3><b><%= @user['nickname'] %></b></h3>
+  <button type="button" class="btn btn-warning"><%= @user['email'] %></button>
+  <button type="button" class="btn btn-info">Created: <%= @user['created_at'] %></button>
+  <button type="button" class="btn btn-info">Updated: <%= @user['updated_at'] %></button>
+</div>
+<div class="photo_file container">
+<div class="col-md-12">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <span class="btn btn-info btn-file">
+                    Browse… <input type="file" id="imgInp">
+                </span>
+            </span>
+            <input type="text" class="form-control" readonly value="Upload Image">
+        </div>
+        <img id='img-upload'/>
+    </div>
+</div>
+</div>

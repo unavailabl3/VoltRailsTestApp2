@@ -1,4 +1,70 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+.card.account {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  top: 50px;
+  text-align: center;
+  font-family: arial;
+}
+
+.account .title {
+  color: grey;
+  font-size: 18px;
+}
+
+.account .button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #3498DB;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.account a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+.account button:hover, a:hover {
+  opacity: 0.7;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 100%;
+}
+
+.photo_file{
+  margin-top: 100px;
+  text-align: center;
+}
+
+.photo_file .input-group{
+  width: 50%;
+  margin: 0 auto;
+}
