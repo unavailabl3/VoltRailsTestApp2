@@ -2,8 +2,8 @@ require 'net/http'
 
 module ApplicationHelper
   def api_url
-    #{}"http://localhost:3001"
-    "https://still-badlands-56815.herokuapp.com"
+    "http://localhost:3001"
+    #"https://still-badlands-56815.herokuapp.com"
   end
 
   def logged?
@@ -20,7 +20,7 @@ module ApplicationHelper
     parameters =  {email: email, password: password}.to_json
     header = { 'CONTENT_TYPE' => 'application/json' }
     http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
+    #http.use_ssl = true
     request = Net::HTTP::Post.new(url.request_uri, header)
     request.body = parameters
 
@@ -33,7 +33,7 @@ module ApplicationHelper
     url = URI.parse(url)
     header = { 'Authorization' => "Bearer #{token}" }
     http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
+    #http.use_ssl = true
     request = Net::HTTP::Get.new(url.request_uri, header)
     return http.request(request).body
   end

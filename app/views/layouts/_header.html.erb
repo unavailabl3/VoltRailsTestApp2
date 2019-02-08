@@ -3,11 +3,13 @@
     <div class="navbar-header pull-left">
       <span class="navbar-brand" href="#">RAILSAPP</span>
     </div>
-    <div class="navbar-header pull-right">
-      <%= link_to "Posts", posts_path %>
-      <%= link_to "Account", users_path %>
-      <%= link_to "Report", users_path %>
-      <%= link_to("Logout", "/users/logout") if session[:token] %>
-    </div>
+    <% if session[:token] %>
+      <div class="navbar-header pull-right">
+        <%= link_to "Posts", posts_path %>
+        <%= link_to "Account", users_path %>
+        <%= link_to "Report", users_path %>
+        <%= link_to("Logout", "/users/logout") %>
+      </div>
+    <% end %>
 </div>
 </nav>
