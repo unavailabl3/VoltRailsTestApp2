@@ -2,8 +2,8 @@ require 'net/http'
 
 module ApplicationHelper
   def api_url
-    "http://localhost:3001"
-   #"https://still-badlands-56815.herokuapp.com"
+    #{}"http://localhost:3001"
+    "https://still-badlands-56815.herokuapp.com"
   end
 
   def logged?
