@@ -33,7 +33,7 @@ module ApplicationHelper
     url = URI.parse(url)
     header = { 'Authorization' => "Bearer #{token}" }
     http = Net::HTTP.new(url.host, url.port)
-    #http.use_ssl = true
+    http.use_ssl = true
     request = Net::HTTP::Get.new(url.request_uri, header)
     return http.request(request).body
   end
