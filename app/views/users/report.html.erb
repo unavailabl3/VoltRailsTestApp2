@@ -1,0 +1,38 @@
+<% flash.each do |key, message| %>
+  <div class="alert alert-<%= (key=='report_success')? 'success' : 'danger' %>" role="alert">
+    <%= message %>
+  </div>
+<% end %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center default-text py-3"><i class="fas prefix fa-file-alt"></i></i> Report</h3>
+          <%= form_for :report, url: "/users/report" do |form| %>
+            <div class="md-form">
+              <i class="fa fa-envelope prefix grey-text"></i>
+              <%= email_field(:report, :email, class: "form-control", :placeholder => "Email to receive report", :id => 'defaultForm-email') %>
+            </div>
+            <div class="md-form">
+              <i class="fas prefix fa-calendar-alt grey-text"></i>
+              <div class='date_select'>
+              <%= form.date_select(:start_date, :order => [:day, :month, :year]) %>
+              </div>
+              <label for="defaultForm-pass " class="start_date">Start date</label>
+            </div>
+            <div class="md-form">
+              <i class="fas prefix fa-calendar-alt grey-text"></i>
+              <div class='date_select'>
+                <%= form.date_select(:end_date, :order => [:day, :month, :year]) %>
+              </div>
+              <label for="defaultForm-pass" class="end_date">End date</label>
+            </div>
+             <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+             <%= form.submit  "Generate", class:"btn btn-default waves-effect waves-light"%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

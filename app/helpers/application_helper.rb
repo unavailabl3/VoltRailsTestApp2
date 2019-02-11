@@ -2,8 +2,8 @@ require 'net/http'
 
 module ApplicationHelper
   def api_url
-    "http://localhost:3001"
-    #"https://still-badlands-56815.herokuapp.com"
+    #"http://localhost:3001"
+    "https://still-badlands-56815.herokuapp.com"
   end
 
   def logged?
@@ -29,11 +29,25 @@ module ApplicationHelper
     body if body.key?('token')
   end
 
+  def get_report(email_to: nil, from: nil, to: nil, token: nil)
+    url = URI.parse("#{api_url}/api/v1/reports/by_author.json")
+    parameters =  {'start_date': from, 'end_date': to, 'email': email_to}
+    header = { 'Authorization' => "Bearer #{token}" }
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    request = Net::HTTP::Post.new(url.request_uri, header)
+    request.body = URI.encode_www_form(parameters)
+
+    response = http.request(request)
+    body = JSON.parse(response.body)
+    body if body.key?('message')
+  end
+
   def get_request(url: "", token: nil)
     url = URI.parse(url)
     header = { 'Authorization' => "Bearer #{token}" }
     http = Net::HTTP.new(url.host, url.port)
-    #http.use_ssl = true
+    http.use_ssl = true
     request = Net::HTTP::Get.new(url.request_uri, header)
     return http.request(request).body
   end

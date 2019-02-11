@@ -9,9 +9,6 @@ class UsersController < ApplicationController
     @user = get_user_info(email: @user_email, token: @token)
   end
 
-  def show
-  end
-
   def edit
     file_path = params[:avatar][:file].path
     if (File.size(file_path).to_f / 1024000 < 3) && (['.jpg','.png'].include?(File.extname(file_path)))
@@ -21,6 +18,20 @@ class UsersController < ApplicationController
       flash[:upload_error] = "Upload error. File must be less than 3Mb and must have jpg/png extension."
     end
     redirect_to users_path
+  end
+
+  def getreport
+    email = params[:report]["email"]
+    start_date = [params[:report]["start_date(1i)"],params[:report]["start_date(2i)"],params[:report]["start_date(3i)"]].join("-")
+    end_date = [params[:report]["end_date(1i)"],params[:report]["end_date(2i)"],params[:report]["end_date(3i)"]].join("-")
+    response = get_report(email_to: email, from: start_date, to: end_date, token: @token)
+    if response.nil?
+      flash[:report_error] = "Something is wrong with API server. Try again later."
+      redirect_to users_report_path
+    else
+      flash[:report_success] = response['message']
+      redirect_to users_report_path
+    end
   end
 
   def login
